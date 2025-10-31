@@ -3,6 +3,7 @@ SRC = philo_bonus.c\
 	utils_bonus.c\
 	parsing_bonus.c\
 	timeft_bonus.c\
+	simulation.c\
 	
 OBJ = $(SRC:.c=.o)
 CFLAGS += -g -O1 -pthread #-Wall -Wextra -Werror -fsanitize=thread

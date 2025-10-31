@@ -38,12 +38,15 @@ typedef	struct s_forks
 	int		n_philos;
 }	t_forks;
 
-
-typedef struct	s_philo
+typedef	struct s_philo
 {
-	t_table *table;
-	pid_t	philo;
-	long 	last_meal_ms;
+	int		philo_id;
+	t_table	*table;
+	t_forks	*forks;
+	long	last_meal_ms;
+	long	start_ms;
+	int		meals_eaten;
+	sem_t	*printer;
 }	t_philo;
 
 char	*ft_get_semname(int n);
