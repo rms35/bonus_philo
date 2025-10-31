@@ -1,0 +1,36 @@
+n = 11
+names[11] = /s11, forks[11] = 0x4852000
+n = 10
+names[10] = /s10, forks[10] = 0x4853000
+n = 9
+names[9] = /s9, forks[9] = 0x4854000
+n = 8
+names[8] = /s8, forks[8] = 0x4855000
+n = 7
+names[7] = /s7, forks[7] = 0x4856000
+n = 6
+names[6] = /s6, forks[6] = 0x4857000
+n = 5
+names[5] = /s5, forks[5] = 0x4858000
+n = 4
+names[4] = /s4, forks[4] = 0x4859000
+n = 3
+names[3] = /s3, forks[3] = 0x485a000
+n = 2
+names[2] = /s2, forks[2] = 0x485b000
+n = 1
+names[1] = /s1, forks[1] = 0x485c000
+n = 0
+names[0] = /s0, forks[0] = 0x485d000
+freeing names[0] = /s0, forks[0] = 0x485d000
+freeing names[1] = /s1, forks[1] = 0x485c000
+freeing names[2] = /s2, forks[2] = 0x485b000
+freeing names[3] = /s3, forks[3] = 0x485a000
+freeing names[4] = /s4, forks[4] = 0x4859000
+freeing names[5] = /s5, forks[5] = 0x4858000
+freeing names[6] = /s6, forks[6] = 0x4857000
+freeing names[7] = /s7, forks[7] = 0x4856000
+freeing names[8] = /s8, forks[8] = 0x4855000
+freeing names[9] = /s9, forks[9] = 0x4854000
+freeing names[10] = /s10, forks[10] = 0x4853000
+freeing names[11] = /s11, forks[11] = 0x4852000
