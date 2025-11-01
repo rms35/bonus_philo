@@ -103,27 +103,3 @@ char	*ft_get_semname(int n)
 	}
 	return (name);
 }
-
-void	ft_free_forks(t_forks *fs)
-{
-	int	i;
-
-	i = 0;
-	while (i < fs->n_philos)
-	{
-		printf("freeing names[%d] = %s, forks[%d] = %p\n", i, fs->names[i], i, fs->forks[i]);
-		if (fs->forks[i])
-		{
-			sem_close(fs->forks[i]);
-			if (sem_unlink(fs->names[i]) < 0)
-				write(2, "Error: sem_unlink\n", 19);
-		}
-		free(fs->names[i]);
-		fs->names[i] = NULL;
-		i++;
-	}
-	free(fs->names);
-	free(fs->forks);
-	free(fs);
-	fs = NULL;
-}

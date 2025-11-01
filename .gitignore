@@ -4,3 +4,5 @@ main.c
 *.out
 *.md
 *.pdf
+.*
+*.sh

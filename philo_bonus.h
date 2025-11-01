@@ -49,8 +49,10 @@ typedef	struct s_philo
 	sem_t	*printer;
 }	t_philo;
 
+void	ft_free_philos(t_philo **philos);
+void	ft_free_philo(t_philo *philo);
 char	*ft_get_semname(int n);
-void	ft_free_forks(t_forks *fs);
+void	ft_free_forks(t_forks *forks);
 void	*ft_calloc(size_t nmemb, size_t size);
 void	ft_free_list(t_philo **start);
 void	ft_usleep(long ms, t_philo *philo_d);
