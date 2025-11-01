@@ -15,24 +15,19 @@ long	ft_get_time(void)
 	return (time);
 }
 
-void	ft_usleep(long ms, t_philo *philo_d)
+void	ft_usleep(long ms, sem_t *die)
 {
 	long	start;
 
 	start = ft_get_time();
 	while (1)
 	{
-		pthread_mutex_lock(philo_d->dead_m);
-		if (*(philo_d->dead))
-		{
-			pthread_mutex_unlock(philo_d->dead_m);
+		if (ft_check_dead(die))
 			break ;
-		}
-		pthread_mutex_unlock(philo_d->dead_m);
 		if (ft_get_time() - start >= ms)
 			break ;
 		if (ms > 200)
-			usleep(100);
+			usleep(200);
 		else
 		{
 			usleep(ms);
@@ -41,61 +36,61 @@ void	ft_usleep(long ms, t_philo *philo_d)
 	}
 }
 
-int	ft_set_timer(t_philo *node)
-{
-	int		i;
-	long	time;
+// int	ft_set_timer(t_philo *node)
+// {
+// 	int		i;
+// 	long	time;
 
-	time = ft_get_time();
-	if (time < 0)
-		return (-1);
-	i = 0;
-	while (node && i < node->n_philos)
-	{
-		node->start_t = time;
-		node->last_meal_t = node->start_t;
-		node = node->next;
-		i++;
-	}
-	return (0);
-}
+// 	time = ft_get_time();
+// 	if (time < 0)
+// 		return (-1);
+// 	i = 0;
+// 	while (node && i < node->n_philos)
+// 	{
+// 		node->start_t = time;
+// 		node->last_meal_t = node->start_t;
+// 		node = node->next;
+// 		i++;
+// 	}
+// 	return (0);
+// }
 
-long	ft_time_printer(t_philo *philo_d, int act)
-{
-	suseconds_t		current_t;
+// long	ft_time_printer(t_philo *philo_d, int act)
+// {
+// 	suseconds_t		current_t;
 
-	current_t = ft_get_time();
-	if (current_t < 0)
-		return (-1);
-	if ((current_t - philo_d->last_meal_t) >= philo_d->t_to_die)
-		act = -1;
-	pthread_mutex_lock(philo_d->printer);
-	if (!philo_d->n_to_eat && *(philo_d->dead))
-	{
-		pthread_mutex_unlock(philo_d->printer);
-		return (-1);
-	}
-	printf("%ld ms %d", current_t - philo_d->start_t, philo_d->philo);
-	if (act == FORK)
-		printf(" has taken a fork\n");
-	else if (act == EAT)
-	{
-		philo_d->last_meal_t = current_t;
-		printf(" is eating\n");
-		pthread_mutex_unlock(philo_d->printer);
-		ft_usleep(philo_d->t_to_eat, philo_d);
-	}
-	else if (act == SLEEP)
-		printf(" is sleeping\n");
-	else if (act == THINK)
-		printf(" is thinking\n");
-	else
-	{
-		printf(" died\n");
-		pthread_mutex_unlock(philo_d->printer);
-		return (-1);
-	}
-	if (act != EAT)
-		pthread_mutex_unlock(philo_d->printer);
-	return (0);
-}
+// 	current_t = ft_get_time();
+// 	if (current_t < 0)
+// 		return (-1);
+// 	if ((current_t - philo_d->last_meal_t) >= philo_d->t_to_die)
+// 		act = -1;
+// 	pthread_mutex_lock(philo_d->printer);
+// 	if (!philo_d->n_to_eat && *(philo_d->dead))
+// 	{
+// 		pthread_mutex_unlock(philo_d->printer);
+// 		return (-1);
+// 	}
+// 	printf("%ld ms %d", current_t - philo_d->start_t, philo_d->philo);
+// 	if (act == FORK)
+// 		printf(" has taken a fork\n");
+// 	else if (act == EAT)
+// 	{
+// 		philo_d->last_meal_t = current_t;
+// 		printf(" is eating\n");
+// 		pthread_mutex_unlock(philo_d->printer);
+// 		ft_usleep(philo_d->t_to_eat, philo_d);
+// 	}
+// 	else if (act == SLEEP)
+// 		printf(" is sleeping\n");
+// 	else if (act == THINK)
+// 		printf(" is thinking\n");
+// 	else
+// 	{
+// 		printf(" died\n");
+// 		pthread_mutex_unlock(philo_d->printer);
+// 		return (-1);
+// 	}
+// 	if (act != EAT)
+// 		pthread_mutex_unlock(philo_d->printer);
+// 	return (0);
+// }

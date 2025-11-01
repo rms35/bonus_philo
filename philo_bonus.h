@@ -12,6 +12,7 @@
 # include <semaphore.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <errno.h>
 
 # define ERR_MSG "Arguments expected: number_of_philosophers, time_to_die, time_to_eat, time_to_sleep [number_of_times_each_philosopher_must_eat]\n"
 # define COLL_MSG "All philosophers are collected\n"
@@ -44,12 +45,16 @@ typedef	struct s_philo
 	int		philo_id;
 	t_table	*table;
 	t_forks	*forks;
+	int		fork1;
+	int		fork2;
 	long	last_meal_ms;
 	long	start_ms;
 	int		meals_eaten;
 	sem_t	*printer;
+	sem_t	*die;
 }	t_philo;
 
+int		ft_check_dead(sem_t *die);
 int		ft_start_sim(t_philo **philos);
 void	ft_free_philos(t_philo **philos);
 void	ft_free_child(t_philo **philo);
@@ -57,7 +62,7 @@ char	*ft_get_semname(int n);
 void	ft_free_forks(t_forks *forks, int child);
 void	*ft_calloc(size_t nmemb, size_t size);
 void	ft_free_list(t_philo **start);
-void	ft_usleep(long ms, t_philo *philo_d);
+void	ft_usleep(long ms, sem_t *die);
 void	ft_set_dead_m(t_philo *philo_d, int dead);
 int		ft_atoi(char *s);
 int		ft_strlen(char *s);
@@ -65,6 +70,6 @@ int		ft_parse(t_table *data, char **argv);
 int		ft_set_timer(t_philo *node);
 long	ft_time_printer(t_philo *philo, int act);
 long	ft_get_time(void);
-int		ft_philo(t_philo **philo, int n_philo);
+int		ft_philo(t_philo **philo, int n_philo, sem_t *die);
 
 #endif
