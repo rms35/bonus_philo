@@ -9,10 +9,10 @@ static t_philo	**ft_create_philos(t_table *table, t_forks *forks)
 		return (NULL);
 	philos = (t_philo **)ft_calloc(table->n_philos, sizeof(t_philo *));
 	if (!philos)
-		return (write(2, "Error: malloc\n", 14), ft_free_forks(forks), free(table), NULL);
+		return (write(2, "Error: malloc\n", 14), ft_free_forks(forks, 0), free(table), NULL);
 	printer = sem_open("/printer", O_CREAT | O_EXCL, 0644, 1);
 	if (printer == SEM_FAILED)
-		return (free(philos), ft_free_forks(forks), free(table), write(2, "Error: sem_open\n", 16), NULL);
+		return (free(philos), ft_free_forks(forks, 0), free(table), write(2, "Error: sem_open\n", 16), NULL);
 	i = 0;
 	while (i < table->n_philos)
 	{
@@ -41,13 +41,13 @@ static t_forks	*ft_init_forks(t_forks *fs)
 	{
 		fs->names[n] = ft_get_semname(n + 1);
 		if (!fs->names)
-			return (ft_free_forks(fs), write(2, "Error: malloc\n", 14), NULL);
+			return (ft_free_forks(fs, 0), write(2, "Error: malloc\n", 14), NULL);
 		fs->forks[n] = sem_open(fs->names[n],  O_CREAT | O_EXCL, 0644, n);
 		if ((fs->forks[n]) == SEM_FAILED)
-			return (ft_free_forks(fs), write(2, "Error: sem_open\n", 16), NULL);
+			return (ft_free_forks(fs, 0), write(2, "Error: sem_open\n", 16), NULL);
 		printf("names[%d] = %s, forks[%d] = %p\n", n, fs->names[n], n, fs->forks[n]);
 		if (!(fs->names[n]))
-			return (ft_free_forks(fs), write(2, "Error: malloc\n", 14), NULL);
+			return (ft_free_forks(fs, 0), write(2, "Error: malloc\n", 14), NULL);
 		n--;
 	}
 	return (fs);
@@ -76,5 +76,5 @@ int	main(int argc, char **argv)
 	philos = ft_create_philos(table, forks);
 	if (!philos)
 		return (1);
-	ft_free_philos(philos);
+	ft_start_sim(philos);
 }

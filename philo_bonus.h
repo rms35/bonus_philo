@@ -5,6 +5,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/time.h>
+# include <sys/wait.h>
 # include <string.h>
 # include <stdint.h>
 # include <limits.h>
@@ -49,10 +50,11 @@ typedef	struct s_philo
 	sem_t	*printer;
 }	t_philo;
 
+int		ft_start_sim(t_philo **philos);
 void	ft_free_philos(t_philo **philos);
-void	ft_free_philo(t_philo *philo);
+void	ft_free_child(t_philo **philo);
 char	*ft_get_semname(int n);
-void	ft_free_forks(t_forks *forks);
+void	ft_free_forks(t_forks *forks, int child);
 void	*ft_calloc(size_t nmemb, size_t size);
 void	ft_free_list(t_philo **start);
 void	ft_usleep(long ms, t_philo *philo_d);
@@ -63,5 +65,6 @@ int		ft_parse(t_table *data, char **argv);
 int		ft_set_timer(t_philo *node);
 long	ft_time_printer(t_philo *philo, int act);
 long	ft_get_time(void);
+int		ft_philo(t_philo **philo, int n_philo);
 
 #endif
