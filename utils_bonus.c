@@ -80,26 +80,3 @@ char	*ft_itoa(char *str, int n)
 	str[len] = nbr + 48;
 	return (str);
 }
-
-char	*ft_get_semname(int n)
-{
-	char	*name;
-	int		len;
-	int		i;
-
-	if (n < 0)
-		return (NULL);
-	name = (char *)ft_calloc(NAME_MAX - 2, sizeof(char));
-	if (!name)
-		return (write(2, "Error: malloc\n", 15), NULL);
-	name[0] = '/';
-	name[1] = 's';
-	i = 1;
-	len = ft_intlen(n);
-	while (i < len + 1 && i < (NAME_MAX - 4))
-	{
-		ft_itoa(name + 2, n);
-		i++;
-	}
-	return (name);
-}

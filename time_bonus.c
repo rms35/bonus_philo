@@ -15,14 +15,14 @@ long	ft_get_time(void)
 	return (time);
 }
 
-void	ft_usleep(long ms, sem_t *die)
+void	ft_usleep(long ms)
 {
 	long	start;
 
 	start = ft_get_time();
 	while (1)
 	{
-		if (ft_check_dead(die))
+		if (ft_check_dead())
 			break ;
 		if (ft_get_time() - start >= ms)
 			break ;
