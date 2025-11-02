@@ -19,7 +19,7 @@ long	ft_get_time(void)
 
 /* @brief Substitute of usleep, checking for philosophers deads every 200ms */
 /* @return 0 if everything went ok, 1 if a philosopher died */
-int	ft_usleep(long ms)
+int	ft_usleep(long ms, t_philo *philo)
 {
 	long	start;
 	int		dead;
@@ -28,7 +28,7 @@ int	ft_usleep(long ms)
 	dead = 0;
 	while (1)
 	{
-		if (ft_check_dead())
+		if (ft_check_dead(philo))
 		{
 			dead = 1;
 			break ;

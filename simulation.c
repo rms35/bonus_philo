@@ -10,21 +10,36 @@ int	ft_philo(t_philo **philos, int n_philo, sem_t *die)
 
 	i = 1;
 	philo = philos[n_philo];
-	philos[n_philo]->philo_id = n_philo;
-	philos[n_philo]->start_ms = ft_get_time();
+	philo->philo_id = n_philo + 1;
+	philo->start_ms = ft_get_time();
+	philo->last_meal_ms = philo->start_ms;
 	while (1)
 	{
 		if (philo->table->n_to_eat > 0 && i >= philo->table->n_to_eat)
-			break;
+		{
+			if (sem_wait(philo->printer) < 0)
+				write(2, "Error: sem_wait\n", 16);
+			printf("%ld ms %d died3\n", ft_get_time() - philo->start_ms, philo->philo_id);
+			if (sem_post(philo->printer) < 0)
+				write(2, "Error: sem_wait\n", 16);
+			if (sem_unlink("/die") < 0 && errno != ENOENT)
+				write(2, "Error: sem_unlink1\n", 19);
+			ft_free_child(philos);
+			sem_close(die);
+			exit(EXIT_SUCCESS);
+		}
 		if (ft_takeforks(philo))
 			break ;
-		if (ft_sleep(philo->table->t_to_sleep, philo))
+		if (ft_eat(philo))
+			break ;
+		if (ft_sleep(philo))
 			break ;
 		i++;
 	}
 	ft_free_child(philos);
 	sem_close(die);
-	sem_unlink("/die");
+	if (sem_unlink("/die") < 0 && errno != ENOENT)
+		write(2, "Error: sem_unlink2\n", 19);
 	exit(EXIT_SUCCESS);
 }
 
@@ -40,7 +55,6 @@ int	ft_wait_philos(int n_philos)
 	while (i <= n_philos)
 	{
 		waitpid(-1, &status, 0);
-		printf("%d philosophers dead\n", i);
 		i++;
 	}
 	return (1);
@@ -67,28 +81,28 @@ int	ft_start_sim(t_philo **philos)
 {
 	int		i;
 	int		n_philos;
-	pid_t	*pid;
+	pid_t	pid;
 
 	i = 0;
 	n_philos = philos[i]->table->n_philos;
-	pid = ft_calloc(n_philos + 1, sizeof(pid_t));
-	if (!pid)
-		return (ft_pid_error(philos));
+	// pid = ft_calloc(n_philos + 1, sizeof(pid_t));
+	// if (!pid)
+	// 	return (ft_pid_error(philos));
 	while (i < n_philos)
 	{
-		pid[i] = fork();
-		if (pid[i] < 0)
+		pid = fork();
+		if (pid < 0)
 		{
 			write(2, "Error: fork\n", 12);
 			break ;
 		}
-		if (pid[i] == 0)
+		if (pid == 0)
 			ft_philo(philos, i, (*philos)->die);
 		i++;
 	}
 	ft_wait_philos(n_philos);
 	if (sem_close((*philos)->die) < 0)
 		write(2, "Error: sem_close\n", 17);
-	ft_free_pid(pid, n_philos);
+	// free(pid);
 	ft_free_philos(philos);
 }

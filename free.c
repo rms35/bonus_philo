@@ -1,20 +1,8 @@
 #include "philo_bonus.h"
 
-void	ft_free_pid(pid_t *pid, int n)
-{
-	int	i;
-
-	if (!pid || n <= 0)
-		return ;
-	i = 0;
-	while (i <= n)
-	{
-		free(pid[i]);
-		i++;
-	}
-	return ;
-}
-
+/* @brief Releases resources when philosopher initialization fails.
+Frees the shared table, closes/unlinks the forks semaphore, and destroys
+every `t_philo` node that was already allocated. */
 void	ft_free_when_creating(t_philo **philos, sem_t *forks, t_table *table)
 {
 	if (!philos)
@@ -28,6 +16,7 @@ void	ft_free_when_creating(t_philo **philos, sem_t *forks, t_table *table)
 	return ;
 }
 
+/* @brief Closes the forks semaphore and unlinks it on the parent process. */
 void	ft_close_forks(sem_t *forks, int child)
 {
 	int	i;
@@ -46,6 +35,9 @@ void	ft_close_forks(sem_t *forks, int child)
 	return ;
 }
 
+/* @brief Frees all child-process resources.
+Closes the printer/seats semaphores, releases the table copy and every
+`t_philo`, and closes the shared forks semaphore without unlinking. */
 void	ft_free_child(t_philo **philos)
 {
 	int	i;
@@ -76,6 +68,8 @@ void	ft_free_child(t_philo **philos)
 	return ;
 }
 
+/* @brief Closes and unlinks the shared semaphores held by the parent. */
+/* Frees `philos[0]->printer` and `philos[0]->seats` handles plus `/forks`. */
 void	ft_close_sems(t_philo **philos)
 {
 	if (!philos || !philos[0])
@@ -92,6 +86,10 @@ void	ft_close_sems(t_philo **philos)
 
 }
 
+/* @brief Fully frees the philosophers array and shared table
+in the parent. Closes and unlinks semaphores via `ft_close_sems`,
+releases the table, and frees every `t_philo` entry and the
+array wrapper. */
 void	ft_free_philos(t_philo **philos)
 {
 	int	i;

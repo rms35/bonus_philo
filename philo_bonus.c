@@ -75,7 +75,7 @@ int	main(int argc, char **argv)
 		return (write(2, "Error: malloc\n", 14), 1);
 	if (!ft_parse(table, argv))
 		return (free(table), 1);
-	forks = sem_open("forks",  O_CREAT | O_EXCL, 0644, table->n_philos);
+	forks = sem_open("/forks",  O_CREAT | O_EXCL, 0644, table->n_philos);
 	if ((forks) == SEM_FAILED)
 		return (ft_close_forks(forks, 0), free(table), write(2, "Error: sem_open\n", 16), 1);
 	philos = ft_create_philos(table, forks);
