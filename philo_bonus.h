@@ -45,6 +45,8 @@ typedef	struct s_philo
 	sem_t	*seats;
 }	t_philo;
 
+void	ft_close_sems(t_philo **philos);
+void	ft_free_when_creating(t_philo **philos, sem_t *forks, t_table *table);
 int		ft_takeforks(t_philo *philo);
 int		ft_check_dead(void);
 int		ft_start_sim(t_philo **philos);
