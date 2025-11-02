@@ -1,5 +1,20 @@
 #include "philo_bonus.h"
 
+void	ft_free_pid(pid_t *pid, int n)
+{
+	int	i;
+
+	if (!pid || n <= 0)
+		return ;
+	i = 0;
+	while (i <= n)
+	{
+		free(pid[i]);
+		i++;
+	}
+	return ;
+}
+
 void	ft_free_when_creating(t_philo **philos, sem_t *forks, t_table *table)
 {
 	if (!philos)
@@ -25,7 +40,7 @@ void	ft_close_forks(sem_t *forks, int child)
 		if (!child)
 		{
 			if (sem_unlink("/forks") < 0)
-				write(2, "Error: sem_unlink\n", 18);
+				write(2, "Error: sem_unlink\n", 19);
 		}
 	}
 	return ;
@@ -69,14 +84,10 @@ void	ft_close_sems(t_philo **philos)
 		write(2, "Error: sem_close\n", 17);
 	if (philos[0]->seats && sem_close(philos[0]->seats) < 0)
 		write(2, "Error: sem_close\n", 17);
-	if (philos[0]->die && sem_close(philos[0]->die) < 0)
-		write(2, "Error: sem_close\n", 17);
-	if (philos[0]->die && sem_unlink("/die") < 0)
-		write(2, "Error: sem_unlink\n", 18);
 	if (philos[0]->printer && sem_unlink("/printer") < 0)
-		write(2, "Error: sem_unlink\n", 18);
+		write(2, "Error: sem_unlink\n", 19);
 	if (philos[0]->seats && sem_unlink("/seats") < 0)
-		write(2, "Error: sem_unlink\n", 18);
+		write(2, "Error: sem_unlink\n", 19);
 	ft_close_forks((*philos)->forks, 0);
 
 }

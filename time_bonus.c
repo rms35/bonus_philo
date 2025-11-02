@@ -1,9 +1,11 @@
 # include "philo_bonus.h"
 
+/* @brief Gets the current time since Epoch in miliseconds */
+/* @return The (long)time in miliseconds or -1 on error*/
 long	ft_get_time(void)
 {
 	struct timeval	*tv;
-	long			time;
+	unsigned int	time;
 
 	tv = (struct timeval *)ft_calloc(1, sizeof(struct timeval));
 	if (!tv)
@@ -15,15 +17,22 @@ long	ft_get_time(void)
 	return (time);
 }
 
-void	ft_usleep(long ms)
+/* @brief Substitute of usleep, checking for philosophers deads every 200ms */
+/* @return 0 if everything went ok, 1 if a philosopher died */
+int	ft_usleep(long ms)
 {
 	long	start;
+	int		dead;
 
 	start = ft_get_time();
+	dead = 0;
 	while (1)
 	{
 		if (ft_check_dead())
+		{
+			dead = 1;
 			break ;
+		}
 		if (ft_get_time() - start >= ms)
 			break ;
 		if (ms > 200)
@@ -31,66 +40,8 @@ void	ft_usleep(long ms)
 		else
 		{
 			usleep(ms);
-			return ;
+			break ;
 		}
 	}
+	return (dead);
 }
-
-// int	ft_set_timer(t_philo *node)
-// {
-// 	int		i;
-// 	long	time;
-
-// 	time = ft_get_time();
-// 	if (time < 0)
-// 		return (-1);
-// 	i = 0;
-// 	while (node && i < node->n_philos)
-// 	{
-// 		node->start_t = time;
-// 		node->last_meal_t = node->start_t;
-// 		node = node->next;
-// 		i++;
-// 	}
-// 	return (0);
-// }
-
-// long	ft_time_printer(t_philo *philo_d, int act)
-// {
-// 	suseconds_t		current_t;
-
-// 	current_t = ft_get_time();
-// 	if (current_t < 0)
-// 		return (-1);
-// 	if ((current_t - philo_d->last_meal_t) >= philo_d->t_to_die)
-// 		act = -1;
-// 	pthread_mutex_lock(philo_d->printer);
-// 	if (!philo_d->n_to_eat && *(philo_d->dead))
-// 	{
-// 		pthread_mutex_unlock(philo_d->printer);
-// 		return (-1);
-// 	}
-// 	printf("%ld ms %d", current_t - philo_d->start_t, philo_d->philo);
-// 	if (act == FORK)
-// 		printf(" has taken a fork\n");
-// 	else if (act == EAT)
-// 	{
-// 		philo_d->last_meal_t = current_t;
-// 		printf(" is eating\n");
-// 		pthread_mutex_unlock(philo_d->printer);
-// 		ft_usleep(philo_d->t_to_eat, philo_d);
-// 	}
-// 	else if (act == SLEEP)
-// 		printf(" is sleeping\n");
-// 	else if (act == THINK)
-// 		printf(" is thinking\n");
-// 	else
-// 	{
-// 		printf(" died\n");
-// 		pthread_mutex_unlock(philo_d->printer);
-// 		return (-1);
-// 	}
-// 	if (act != EAT)
-// 		pthread_mutex_unlock(philo_d->printer);
-// 	return (0);
-// }

@@ -24,6 +24,7 @@
 #  define NAME_MAX 255
 # endif
 
+/* Table with the arguments passed to the program */
 typedef struct s_table
 {
 	int				n_philos;
@@ -32,6 +33,8 @@ typedef struct s_table
 	__useconds_t	t_to_sleep;
 	int				n_to_eat;
 }	t_table;
+
+/* Structure relevant to each fhilosopher */
 typedef	struct s_philo
 {
 	int		philo_id;
@@ -45,24 +48,29 @@ typedef	struct s_philo
 	sem_t	*seats;
 }	t_philo;
 
+/* Utils and parsing*/
+void	*ft_calloc(size_t nmemb, size_t size);
+int		ft_atoi(char *s);
+int		ft_parse(t_table *data, char **argv);
+int		ft_strlen(char *s);
+
+/* Freeing allocated memory and liberating resources */
 void	ft_close_sems(t_philo **philos);
+void	ft_free_pid(pid_t *pid, int n);
 void	ft_free_when_creating(t_philo **philos, sem_t *forks, t_table *table);
-int		ft_takeforks(t_philo *philo);
-int		ft_check_dead(void);
-int		ft_start_sim(t_philo **philos);
 void	ft_free_philos(t_philo **philos);
 void	ft_free_child(t_philo **philo);
 void	ft_close_forks(sem_t *forks, int child);
-void	*ft_calloc(size_t nmemb, size_t size);
-void	ft_free_list(t_philo **start);
-void	ft_usleep(long ms);
-void	ft_set_dead(sem_t *die);
-int		ft_atoi(char *s);
-int		ft_strlen(char *s);
-int		ft_parse(t_table *data, char **argv);
-int		ft_set_timer(t_philo *node);
-long	ft_time_printer(t_philo *philo, int act);
+
+/* Time relative */
+int		ft_sleep(unsigned int time_ms, t_philo *philo);
+int		ft_usleep(long ms);
 long	ft_get_time(void);
+
+/* Simulation */
+int		ft_takeforks(t_philo *philo);
+int		ft_check_dead(void);
+int		ft_start_sim(t_philo **philos);
 int		ft_philo(t_philo **philo, int n_philo, sem_t *die);
 
 #endif

@@ -1,5 +1,7 @@
 #include "philo_bonus.h"
 
+
+/* @brief Calloc implementation */
 void *ft_calloc(size_t nmemb, size_t size)
 {
 	void	*result;
@@ -26,6 +28,7 @@ void *ft_calloc(size_t nmemb, size_t size)
 	return (result);
 }
 
+/* @brief Strlen implementation, but more secure */
 int	ft_strlen(char *s)
 {
 	int	i;
@@ -38,7 +41,7 @@ int	ft_strlen(char *s)
 	return (i);
 }
 
-size_t	ft_intlen(long n)
+static size_t	ft_intlen(long n)
 {
 	size_t	len;
 
@@ -56,6 +59,9 @@ size_t	ft_intlen(long n)
 	return (len);
 }
 
+/* @brief Converts an integer into a string in the passed string */
+/* @return The string with the converted integer, NULL if no string
+was passed */
 char	*ft_itoa(char *str, int n)
 {
 	size_t	len;

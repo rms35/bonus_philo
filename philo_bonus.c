@@ -1,5 +1,10 @@
 #include "philo_bonus.h"
 
+
+/* @brief Opens the named semaphores for die, printer and seats, then
+initializes them in each philo */
+/* @return 0 on succes, 1 if any sem_open failed (and liberates all 
+resources, incluiding de t_philo * array) */
 static int	ft_init_sem(t_philo **philos, sem_t *forks)
 {
 	sem_t	*printer;
@@ -24,6 +29,10 @@ static int	ft_init_sem(t_philo **philos, sem_t *forks)
 	return (0);
 }
 
+/* Creates an array of [number of philosophers] t_philo *philo and initializes
+each one of them */
+/* @return The pointer to the array on success, NULL on failure, and 
+liberates resources  */
 static t_philo	**ft_create_philos(t_table *table, sem_t *forks)
 {
 	t_philo	**philos;
@@ -68,7 +77,7 @@ int	main(int argc, char **argv)
 		return (free(table), 1);
 	forks = sem_open("forks",  O_CREAT | O_EXCL, 0644, table->n_philos);
 	if ((forks) == SEM_FAILED)
-		return (ft_close_forks(forks, 0), free(table), write(2, "Error: sem_open2\n", 16), 1);
+		return (ft_close_forks(forks, 0), free(table), write(2, "Error: sem_open\n", 16), 1);
 	philos = ft_create_philos(table, forks);
 	if (!philos)
 		return (1);
