@@ -75,7 +75,7 @@ flowchart TD
     Think --> CheckMeals[¿meta de comidas alcanzada?]
     CheckMeals -->|sí| ExitChild[Liberar recursos hijo<br/>ft_free_child]
     CheckMeals -->|no| CheckDeath[ft_check_dead]
-    CheckDeath -->|muere| SignalDie[sem_unlink(/die) y log muerte]
+    CheckDeath -->|muere| SignalDie["sem_unlink('/die')<br/>log muerte"]
     CheckDeath -->|vive| Cycle
     WaitChildren --> Cleanup[ft_free_philos + sem_unlink]
     ExitChild --> Cleanup
