@@ -1,5 +1,19 @@
 #include "philo_bonus.h"
+static int	ft_think(t_philo *philo)
+{
+	long	t;
+	int		dead;
 
+	t = ft_get_time();
+	if (sem_wait(philo->printer) < 0)
+		write(2,"Error: sem_wait\n", 16);
+	dead = ft_check_dead(philo);
+	if (!dead)
+		printf("%ld ms %d is thinking\n", t - philo->start_ms, philo->philo_id);
+	if (sem_post(philo->printer) < 0)
+		write(2,"Error: sem_post\n", 16);
+	return (dead);
+}
 /* @brief Executes philosophers actions: taking forks, eating, sleeping
 and thinking */
 /* @return to be decided upon */
@@ -33,6 +47,8 @@ int	ft_philo(t_philo **philos, int n_philo, sem_t *die)
 		if (ft_eat(philo))
 			break ;
 		if (ft_sleep(philo))
+			break ;
+		if (ft_think(philo))
 			break ;
 		i++;
 	}

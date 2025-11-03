@@ -10,7 +10,7 @@ SRC = philo_bonus.c\
 	
 OBJ = $(SRC:.c=.o)
 OBJ_H = $(SRC:.c=.o)
-CFLAGS += -g -O1 -pthread #-Wall -Wextra -Werror -fsanitize=thread
+CFLAGS += -g -O3 -pthread #-Wall -Wextra -Werror -fsanitize=thread
 HFLAGS += -g -pthread #-Wall -Wextra -Werror -fsanitize=thread
 FLAGS = $(CFLAGS)
 ifeq ($(MAKECMDGOALS),hell)
