@@ -56,7 +56,7 @@ graph TD
     Actions --> Death[simulation2.c<br/>ft_check_dead]
     ChildLoop --> CleanupChild[free.c<br/>ft_free_child]
     Main --> CleanupParent[free.c<br/>ft_free_philos]
-    Main --> Utils[utils_bonus.c | parsing_bonus.c | time_bonus.c]
+    Main --> Utils[utils_bonus.c<br/>parsing_bonus.c<br/>time_bonus.c]
 ```
 
 ## Flujo de ejecución
@@ -75,7 +75,7 @@ flowchart TD
     Think --> CheckMeals[¿meta de comidas alcanzada?]
     CheckMeals -->|sí| ExitChild[Liberar recursos hijo<br/>ft_free_child]
     CheckMeals -->|no| CheckDeath[ft_check_dead]
-    CheckDeath -->|muere| SignalDie[sem_unlink(\"/die\") y log muerte]
+    CheckDeath -->|muere| SignalDie[sem_unlink(&quot;/die&quot;) y log muerte]
     CheckDeath -->|vive| Cycle
     WaitChildren --> Cleanup[ft_free_philos + sem_unlink]
     ExitChild --> Cleanup
@@ -88,4 +88,3 @@ flowchart TD
 - La bandera global `/die` se usa como latch: cuando un proceso detecta una muerte, la unlinkea, permitiendo que los demás procesos salgan limpiamente.
 - `ft_usleep` combina comprobaciones periódicas con descansos cortos para responder rápido a eventos de muerte sin saturar la CPU.
 - Los scripts de pruebas eliminan restos de semáforos en `/dev/shm` entre ejecuciones, requisito habitual del subject para evitar interferencias.
-
