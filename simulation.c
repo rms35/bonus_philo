@@ -39,7 +39,7 @@ int	ft_philo(t_philo **philos, int n_philo, sem_t *die)
 		{
 			if (sem_wait(philo->printer) < 0)
 				write(2, "Error: sem_wait\n", 16);
-			printf("%ld ms %d died3\n", ft_get_time() - philo->start_ms, philo->philo_id);
+			printf("%ld ms %d died\n", ft_get_time() - philo->start_ms, philo->philo_id);
 			if (sem_post(philo->printer) < 0)
 				write(2, "Error: sem_wait\n", 16);
 			if (sem_unlink("/die") < 0 && errno != ENOENT)

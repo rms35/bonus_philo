@@ -22,26 +22,22 @@ long	ft_get_time(void)
 int	ft_usleep(long ms, t_philo *philo)
 {
 	long	start;
-	int		dead;
+	long	elapsed;
+	long	remaining;
 
 	start = ft_get_time();
-	dead = 0;
 	while (1)
 	{
 		if (ft_check_dead(philo))
-		{
-			dead = 1;
+			return (1);
+		elapsed = ft_get_time() - start;
+		if (elapsed >= ms)
 			break ;
-		}
-		if (ft_get_time() - start >= ms)
-			break ;
-		if (ms > 200)
-			usleep(200);
+		remaining = ms - elapsed;
+		if (remaining > 200)
+			usleep(200 * 1000);
 		else
-		{
-			usleep(ms);
-			break ;
-		}
+			usleep(remaining * 1000);
 	}
-	return (dead);
+	return (0);
 }

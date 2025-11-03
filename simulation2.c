@@ -13,7 +13,7 @@ int	ft_check_dead(t_philo *philo)
 	s = sem_open("/die", 0);
 	if (s == SEM_FAILED && errno == ENOENT)
 	{
-		printf("%ld ms %d died1\n", time - philo->start_ms, philo->philo_id);
+		printf("%ld ms %d died\n", time - philo->start_ms, philo->philo_id);
 		return (1);
 	}
 	if (s != SEM_FAILED)
@@ -108,7 +108,7 @@ int	ft_takeforks(t_philo *philo)
 	}
 	else
 	{
-		printf("%ld ms %d died2\n", start_t - philo->start_ms, philo_id);
+		printf("%ld ms %d died\n", start_t - philo->start_ms, philo_id);
 		if (sem_post(philo->printer) < 0)
 			write(2, "Error: sem_post\n", 16);	
 		if (sem_unlink("/die") < 0 && errno != ENOENT)
@@ -172,7 +172,7 @@ int	ft_eat(t_philo *philo)
 	printf("%d meal time = %ld\n", philo->philo_id,  t - philo->last_meal_ms);
 	if (t - philo->last_meal_ms > philo->table->t_to_die)
 	{
-		printf("%ld ms %d died3\n", t - philo->start_ms, philo->philo_id);
+		printf("%ld ms %d died\n", t - philo->start_ms, philo->philo_id);
 		if (sem_unlink("/die") < 0 && errno != ENOENT)
 			write(2, "Error: sem_unlink\n", 18);
 		dead = 1;
