@@ -1,4 +1,8 @@
 #include "philo_bonus.h"
+
+/* @brief Prints when the philosopher starts thinking if no other 
+philosofer died */
+/* @return 0 on success, 1 if a philosopher died */
 static int	ft_think(t_philo *philo)
 {
 	long	t;
@@ -7,6 +11,7 @@ static int	ft_think(t_philo *philo)
 	t = ft_get_time();
 	if (sem_wait(philo->printer) < 0)
 		write(2,"Error: sem_wait\n", 16);
+	printf("%d meal time = %ld\n", philo->philo_id, t - philo->last_meal_ms);
 	dead = ft_check_dead(philo);
 	if (!dead)
 		printf("%ld ms %d is thinking\n", t - philo->start_ms, philo->philo_id);
@@ -14,6 +19,7 @@ static int	ft_think(t_philo *philo)
 		write(2,"Error: sem_post\n", 16);
 	return (dead);
 }
+
 /* @brief Executes philosophers actions: taking forks, eating, sleeping
 and thinking */
 /* @return to be decided upon */
@@ -79,14 +85,14 @@ int	ft_wait_philos(int n_philos)
 /* @brief Liberates resources when failed memory allocation for pid_t array.
 Writes corresponding error messages */
 /* @return Always 1, so we can return this function directly */
-int	ft_pid_error(t_philo **philos)
-{
-	write(2, "Error: malloc\n", 14);
-	ft_free_philos(philos);
-	if (sem_close((*philos)->die) < 0)
-		write(2, "Error: sem_close\n", 17);
-	return (1);
-}
+// int	ft_pid_error(t_philo **philos)
+// {
+// 	write(2, "Error: malloc\n", 14);
+// 	ft_free_philos(philos);
+// 	if (sem_close((*philos)->die) < 0)
+// 		write(2, "Error: sem_close\n", 17);
+// 	return (1);
+// }
 
 /* @brief Starts the simulation. Creates the pid_t array (probably should do it
 in another function, merged with the ft_pid_error function), and forks once for
