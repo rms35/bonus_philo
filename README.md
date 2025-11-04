@@ -53,7 +53,7 @@ graph TD
 
 ## Flujo del programa
 ```mermaid
-flowchart TD
+graph TD
     A[Inicio main()] --> B[Validar argumentos]
     B --> C[Reservar t_table y semaforos]
     C --> D[Crear arreglo de t_philo]
@@ -66,7 +66,7 @@ flowchart TD
     J --> K[Pensar (ft_think)]
     K --> L{Limite de comidas o muerte?}
     L -- No --> H
-    L -- Si --> M[Sem_unlink(\"/die\") y salida hijo]
+    L -- Si --> M[Sem_unlink("/die") y salida hijo]
     F -- No --> N[waitpid sobre hijos]
     N --> O[Liberar semaforos y memoria]
     O --> P[Fin]
@@ -82,4 +82,3 @@ flowchart TD
 - Ejecutar `make` y luego `./philo_bonus 5 800 200 200 3` para un recorrido basico con limite de comidas.
 - Usar `./tests/tester` para reproducir la matriz de escenarios deterministas y capturar logs cronologicos en `tests/logs/<timestamp>/`.
 - Limpiar semaforos residuales tras interrupciones con `sem_unlink` manual si es necesario (ver guia en las instrucciones del subject).
-
