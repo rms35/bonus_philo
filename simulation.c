@@ -76,7 +76,7 @@ in another function, merged with the ft_pid_error function), and forks once for
 each philosopher, then waits for each proccess. Liberates all resources of the
 father */
 /* @return 0 if everything went ok, 1 for any failure */
-int	ft_start_sim(t_philo **philos)
+void	ft_start_sim(t_philo **philos)
 {
 	int		i;
 	int		n_philos;

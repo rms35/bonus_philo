@@ -19,9 +19,6 @@ void	ft_free_when_creating(t_philo **philos, sem_t *forks, t_table *table)
 /* @brief Closes the forks semaphore and unlinks it on the parent process. */
 void	ft_close_forks(sem_t *forks, int child)
 {
-	int	i;
-
-	i = 0;
 	if (forks)
 	{
 		if (sem_close(forks) < 0)

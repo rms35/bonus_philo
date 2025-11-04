@@ -67,8 +67,8 @@ int		ft_usleep(long ms, t_philo *philo);
 long	ft_get_time(void);
 
 /* Simulation */
-int						ft_start_sim(t_philo **philos);
-static int				ft_philo(t_philo **philo, int n_philo, sem_t *die);
+void						ft_start_sim(t_philo **philos);
+// int				ft_philo(t_philo **philo, int n_philo, sem_t *die);
 int						ft_wait_philos(int n_philos);
 
 

@@ -36,7 +36,6 @@ liberates resources  */
 static t_philo	**ft_create_philos(t_table *table, sem_t *forks)
 {
 	t_philo	**philos;
-	int		n_philos;
 	int		i;
 
 	if (!table || !forks)
