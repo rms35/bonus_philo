@@ -54,22 +54,22 @@ graph TD
 ## Flujo del programa
 ```mermaid
 graph TD
-    A[Inicio main()] --> B[Validar argumentos]
-    B --> C[Reservar t_table y semaforos]
-    C --> D[Crear arreglo de t_philo]
-    D --> E[Fork por filosofo]
-    E --> F{Proceso hijo?}
-    F -- Si --> G[Inicializar marcas de tiempo]
-    G --> H[Tomar asientos y forks]
-    H --> I[Comer (ft_eat)]
-    I --> J[Dormir (ft_sleep)]
-    J --> K[Pensar (ft_think)]
-    K --> L{Limite de comidas o muerte?}
-    L -- No --> H
-    L -- Si --> M[Sem_unlink("/die") y salida hijo]
-    F -- No --> N[waitpid sobre hijos]
-    N --> O[Liberar semaforos y memoria]
-    O --> P[Fin]
+    A["Inicio main()"] --> B["Validar argumentos"]
+    B --> C["Reservar t_table y semaforos"]
+    C --> D["Crear arreglo de t_philo"]
+    D --> E["Fork por filosofo"]
+    E --> F{"Proceso hijo?"}
+    F -- "Si" --> G["Inicializar marcas de tiempo"]
+    G --> H["Tomar asientos y forks"]
+    H --> I["Comer (ft_eat)"]
+    I --> J["Dormir (ft_sleep)"]
+    J --> K["Pensar (ft_think)"]
+    K --> L{"Limite de comidas o muerte?"}
+    L -- "No" --> H
+    L -- "Si" --> M["Sem_unlink(\"/die\") y salida hijo"]
+    F -- "No" --> N["waitpid sobre hijos"]
+    N --> O["Liberar semaforos y memoria"]
+    O --> P["Fin"]
 ```
 
 ## Notas adicionales del subject
