@@ -1,5 +1,5 @@
 NAME = philo_bonus
-HEL = philo_hel
+HEL = philo_hell
 SRC = philo_bonus.c\
 	utils_bonus.c\
 	parsing_bonus.c\
@@ -10,8 +10,8 @@ SRC = philo_bonus.c\
 	
 OBJ = $(SRC:.c=.o)
 OBJ_H = $(SRC:.c=.o)
-CFLAGS += -g -O3 -pthread #-Wall -Wextra -Werror -fsanitize=thread
-HFLAGS += -g -pthread #-Wall -Wextra -Werror -fsanitize=thread
+CFLAGS += -Ofast -pthread -Wall -Wextra -Werror
+HFLAGS += -g -pthread -Wall -Wextra -Werror -fsanitize=thread
 FLAGS = $(CFLAGS)
 ifeq ($(MAKECMDGOALS),hell)
 FLAGS = $(HFLAGS)
@@ -35,5 +35,7 @@ clean:
 
 fclean: clean
 	rm -f $(NAME)
+hclean: clean
+	rm -f $(HEL)
 
 re: fclean all
