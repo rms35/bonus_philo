@@ -66,7 +66,7 @@ graph TD
     J --> K["Pensar (ft_think)"]
     K --> L{"Limite de comidas o muerte?"}
     L -- "No" --> H
-    L -- "Si" --> M["Sem_unlink(\"/die\") y salida hijo"]
+    L -- "Si" --> M['Sem_unlink("/die") y salida hijo']
     F -- "No" --> N["waitpid sobre hijos"]
     N --> O["Liberar semaforos y memoria"]
     O --> P["Fin"]
